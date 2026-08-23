@@ -1,0 +1,82 @@
+# rattler-build recipe for z7py.
+#
+# Local / prefix.dev build straight from this checkout:
+#   rattler-build build --recipe recipe.yaml
+#   (uncomment the `path` source below and comment out the `url` source)
+#
+# Release build from the published sdist (this is the form conda-forge wants):
+#   1. publish the sdist to PyPI
+#   2. fill in `sha256` below, e.g.
+#        curl -sL <sdist-url> | shasum -a 256
+#   3. rattler-build build --recipe recipe.yaml
+schema_version: 1
+
+context:
+  name: z7py
+  version: "0.1.0"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  # --- local build (uncomment for prefix.dev / CI from checkout) ---
+  # - path: .
+  # --- release build from PyPI sdist ---
+  - url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+    sha256: 0000000000000000000000000000000000000000000000000000000000000000
+
+build:
+  number: 0
+  noarch: python
+  script: python -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python >=3.10
+    - hatchling
+    - pip
+  run:
+    - python >=3.10
+    - numpy >=1.24
+    - numba >=0.60
+
+tests:
+  - python:
+      imports:
+        - z7py
+      pip_check: true
+  - script:
+      - pytest -q tests
+    requirements:
+      run:
+        - pytest >=7
+    files:
+      source:
+        - tests/
+
+about:
+  homepage: https://github.com/allixender/z7py
+  repository: https://github.com/allixender/z7py
+  summary: Z7 (IGEO7/ISEA7H) discrete global grid indexing and neighbour traversal in NumPy and Numba
+  description: |
+    z7py implements the Z7 indexing system for the IGEO7 / ISEA7H aperture-7
+    hexagonal discrete global grid, based on the Generalized Balanced Ternary
+    (GBT) numeral system with the alternating CW/CCW rotation pattern.
+
+    Z7 indices are bit-packed into a single uint64 (4 bits base cell, 20 x 3
+    bits resolution digits), which makes neighbour traversal, parent/child
+    navigation and monotonic range arithmetic pure integer operations. The
+    hot paths are JIT-compiled with Numba.
+
+    The package is deliberately thin: it depends only on NumPy and Numba, and
+    needs neither the DGGRID binary nor a geospatial stack, so it can be used
+    inside Numba nopython kernels and on bare compute workers.
+  license: Apache-2.0
+  license_file:
+    - LICENSE
+    - NOTICE
+
+extra:
+  recipe-maintainers:
+    - allixender

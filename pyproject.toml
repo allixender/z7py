@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "z7py"
+description = "Z7 (IGEO7/ISEA7H) discrete global grid indexing and neighbour traversal, in NumPy and Numba"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+dynamic = ["version"]
+authors = [
+  { name = "Alexander Kmoch", email = "alexander.kmoch@ut.ee" },
+]
+maintainers = [
+  { name = "Alexander Kmoch", email = "alexander.kmoch@ut.ee" },
+]
+keywords = ["DGGS", "IGEO7", "ISEA7H", "Z7", "GBT", "hexagonal", "geospatial", "numba"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+  "numpy>=1.24",
+  "numba>=0.60",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/allixender/z7py"
+Repository = "https://github.com/allixender/z7py"
+Issues = "https://github.com/allixender/z7py/issues"
+
+[tool.hatch.version]
+path = "z7py/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["z7py"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/z7py",
+  "/tests",
+  "/README.md",
+  "/LICENSE",
+  "/NOTICE",
+  "/CITATION.cff",
+  "/pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

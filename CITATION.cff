@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Kmoch"
+  given-names: "Alexander"
+  orcid: "https://orcid.org/0000-0003-4386-4450"
+title: "z7py: Z7 (IGEO7/ISEA7H) discrete global grid indexing and neighbour traversal in NumPy and Numba"
+version: "0.1.0"
+license: Apache-2.0
+url: "https://github.com/allixender/z7py"
+repository-code: "https://github.com/allixender/z7py"
+keywords:
+  - DGGS
+  - IGEO7
+  - ISEA7H
+  - Z7
+  - generalized balanced ternary
+  - hexagonal grid
+references:
+  - type: article
+    title: "IGEO7: A new hierarchically indexed hexagonal equal-area discrete global grid system"
+    authors:
+      - family-names: "Kmoch"
+        given-names: "Alexander"
+      - family-names: "Sahr"
+        given-names: "Kevin"
+      - family-names: "Chan"
+        given-names: "Wai Tik"
+      - family-names: "Uuemaa"
+        given-names: "Evelyn"
+    journal: "AGILE: GIScience Series"
+    volume: 6
+    start: 32
+    year: 2025
+    doi: "10.5194/agile-giss-6-32-2025"

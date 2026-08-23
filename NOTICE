@@ -1,0 +1,24 @@
+z7py — Z7 (IGEO7/GBT) discrete global grid system for Python
+Copyright 2025-2026 Alexander Kmoch and z7py contributors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes work informed by, and developed in exchange with,
+the following projects and people:
+
+  * DGGRID — Kevin Sahr <sahrk@sou.edu>
+    https://github.com/sahrk/DGGRID/
+
+  * Z7 — Weston James Renoud
+    https://github.com/wrenoud/Z7/
+
+  * Javier Jimenez Shaw
+    https://github.com/jjimenezshaw
+
+The Z7 indexing scheme and the alternating CW/CCW Generalized Balanced
+Ternary rotation pattern implemented here are described in:
+
+  Kmoch, A., et al. (2025). AGILE GIScience Series, 6, 32.
+  https://doi.org/10.5194/agile-giss-6-32-2025
+
+See README.md for the full reference list.
