@@ -1,18 +1,58 @@
 name: Publish
 
+# prefix.dev is the primary channel for now; PyPI is opt-in until Trusted
+# Publishing is configured (see README). The two jobs are independent — the
+# conda recipe builds from this checkout and does not need a PyPI release.
+
 on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      publish_pypi:
+        description: "Also publish to PyPI (requires Trusted Publishing to be set up)"
+        type: boolean
+        default: false
 
 jobs:
+  conda:
+    name: Publish to prefix.dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: prefix-dev/setup-pixi@v0
+        with:
+          pixi-version: latest
+
+      - name: Install rattler-build
+        run: pixi global install rattler-build
+
+      - name: Build
+        run: rattler-build build --recipe recipe.yaml --output-dir ./output
+
+      - name: Upload
+        env:
+          PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
+        run: |
+          if [ -z "$PREFIX_API_KEY" ]; then
+            echo "::error::PREFIX_API_KEY secret is not set"; exit 1
+          fi
+          if [ -z "${{ vars.PREFIX_CHANNEL }}" ]; then
+            echo "::error::PREFIX_CHANNEL repository variable is not set"; exit 1
+          fi
+          rattler-build upload prefix \
+            --channel "${{ vars.PREFIX_CHANNEL }}" \
+            ./output/noarch/*.conda
+
   pypi:
     name: Publish to PyPI
+    # opt-in only: manual runs with the box ticked, or set vars.ENABLE_PYPI=true
+    if: ${{ inputs.publish_pypi || vars.ENABLE_PYPI == 'true' }}
     runs-on: ubuntu-latest
     environment: release
     permissions:
-      # required for PyPI Trusted Publishing (no API token needed)
-      id-token: write
+      id-token: write   # PyPI Trusted Publishing; no API token needed
     steps:
       - uses: actions/checkout@v4
 
@@ -28,29 +68,3 @@ jobs:
 
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
-
-  conda:
-    name: Publish to prefix.dev
-    runs-on: ubuntu-latest
-    # PyPI first: recipe.yaml pulls the published sdist
-    needs: pypi
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: prefix-dev/setup-pixi@v0
-        with:
-          pixi-version: latest
-
-      - name: Install rattler-build
-        run: pixi global install rattler-build
-
-      - name: Build conda package
-        run: rattler-build build --recipe recipe.yaml --output-dir ./conda-bld
-
-      - name: Upload to prefix.dev
-        env:
-          PREFIX_API_KEY: ${{ secrets.PREFIX_API_KEY }}
-        run: |
-          rattler-build upload prefix \
-            --channel z7py \
-            ./conda-bld/noarch/*.conda

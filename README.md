@@ -4,22 +4,25 @@ This is a work-in-progress to explore the possibility of neighbor traversal in t
 
 ## Installation
 
-Currently only hosted in prefix.dev
+Currently published on [prefix.dev](https://prefix.dev/channels/@allixender/geo).
 
-
-
-### later once we figure out the machinery 
+With pixi:
 
 ```bash
-pip install z7py
+pixi project channel add https://prefix.dev/allixender/geo
+pixi add z7py
 ```
 
-or, from a conda channel:
+With conda or mamba:
 
 ```bash
-pixi add z7py          # once published to conda-forge
-conda install -c conda-forge z7py
+conda install -c https://prefix.dev/allixender/geo z7py
 ```
+
+### Not yet on PyPI or conda-forge
+
+`pip install z7py` and `conda install -c conda-forge z7py` are the intended
+end state, but neither is published yet. Until then use the channel above.
 
 z7py is deliberately thin: it depends only on **NumPy** and **Numba**. It needs
 neither the DGGRID binary nor a geospatial stack, so it can be imported inside

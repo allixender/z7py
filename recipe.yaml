@@ -1,14 +1,14 @@
 # rattler-build recipe for z7py.
 #
-# Local / prefix.dev build straight from this checkout:
+# Default: builds straight from this checkout, so it needs nothing on PyPI.
 #   rattler-build build --recipe recipe.yaml
-#   (uncomment the `path` source below and comment out the `url` source)
+#   rattler-build upload prefix --channel <your-channel> output/noarch/*.conda
 #
-# Release build from the published sdist (this is the form conda-forge wants):
-#   1. publish the sdist to PyPI
-#   2. fill in `sha256` below, e.g.
-#        curl -sL <sdist-url> | shasum -a 256
-#   3. rattler-build build --recipe recipe.yaml
+# For a conda-forge submission later, swap the source below to the PyPI sdist
+# form (staged-recipes requires a URL + checksum, not a local path):
+#   source:
+#     - url: https://pypi.org/packages/source/z/z7py/z7py-${{ version }}.tar.gz
+#       sha256: <curl -sL $URL | shasum -a 256>
 schema_version: 1
 
 context:
@@ -20,11 +20,8 @@ package:
   version: ${{ version }}
 
 source:
-  # --- local build (uncomment for prefix.dev / CI from checkout) ---
-  # - path: .
-  # --- release build from PyPI sdist ---
-  - url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
-    sha256: 0000000000000000000000000000000000000000000000000000000000000000
+  - path: .
+    use_gitignore: true
 
 build:
   number: 0
