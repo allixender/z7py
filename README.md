@@ -4,6 +4,12 @@ This is a work-in-progress to explore the possibility of neighbor traversal in t
 
 ## Installation
 
+Currently only hosted in prefix.dev
+
+
+
+### later once we figure out the machinery 
+
 ```bash
 pip install z7py
 ```
