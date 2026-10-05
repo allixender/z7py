@@ -18,3 +18,14 @@ python-build = "*"
 
 [pypi-dependencies]
 z7py = { path = ".", editable = true }
+
+[feature.docs.dependencies]
+sphinx = ">=8"
+sphinx_rtd_theme = ">=3"
+myst-parser = ">=4"
+
+[feature.docs.tasks]
+docs = "sphinx-build -b html docs/source docs/build/html"
+
+[environments]
+docs = ["docs"]

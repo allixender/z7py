@@ -36,9 +36,15 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
+docs = [
+  "sphinx>=8",
+  "sphinx-rtd-theme>=3",
+  "myst-parser>=4",
+]
 
 [project.urls]
 Homepage = "https://github.com/allixender/z7py"
+Documentation = "https://z7py.readthedocs.io/"
 Repository = "https://github.com/allixender/z7py"
 Issues = "https://github.com/allixender/z7py/issues"
 
