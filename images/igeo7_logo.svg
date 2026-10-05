@@ -5,4 +5,4 @@
   <polygon points="50,20 78,35 78,65 50,80 22,65 22,35" fill="none" stroke="#a5d6a7" stroke-width="1.5" opacity="0.6"/>
   <!-- Letter I -->
   <text x="50" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="32" font-weight="800" fill="#ffffff" letter-spacing="-1">i7</text>
-<script xmlns=""/></svg>
+</svg>

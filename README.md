@@ -1,5 +1,7 @@
 # Z7
 
+<img src="https://raw.githubusercontent.com/allixender/z7py/main/images/igeo7_logo.svg" width="100" alt="IGEO7 logo">
+
 This is a work-in-progress to explore the possibility of neighbor traversal in the IGEO7/Z7. Z7 is an indexing system for the IGEO7 aperture 7 hexagonal discrete global grid DGGRID/Sahr Kmoch et al. (2025). It is based on the Generalized Balanced Ternary (GBT) numeral system described in Lucas, Gibson (1982), van Roessel (1988), Sahr (2019), and Wikipedia (2025).
 
 ## Installation
@@ -74,10 +76,6 @@ approach is that the orientation of the hexagons at the different hierarchy leve
 of hexagon
 orientations across hierarchy levels. Kmoch et al. (2025) adopted this alternating rotation pattern for Z7 assigning CW
 to odd resolutions and CCW to even resolutions.
-
-For reference purposes a rendering of three hierarchies of alternating GBT rotation is included (CW, CCW, CW).
-
-<img src="https://raw.githubusercontent.com/allixender/z7py/main/images/grid.svg" width="200" alt="3 hierarchies in Z7's alternating GBT pattern">
 
 ### GBT Addition
 
