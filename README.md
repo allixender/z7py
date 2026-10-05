@@ -4,7 +4,13 @@ This is a work-in-progress to explore the possibility of neighbor traversal in t
 
 ## Installation
 
-Currently published on [prefix.dev](https://prefix.dev/channels/@allixender/geo).
+Published on [PyPI](https://pypi.org/project/z7py/) and on [prefix.dev](https://prefix.dev/channels/@allixender/geo).
+
+With pip:
+
+```bash
+pip install z7py
+```
 
 With pixi:
 
@@ -19,10 +25,10 @@ With conda or mamba:
 conda install -c https://prefix.dev/allixender/geo z7py
 ```
 
-### Not yet on PyPI or conda-forge
+### Not yet on conda-forge
 
-`pip install z7py` and `conda install -c conda-forge z7py` are the intended
-end state, but neither is published yet. Until then use the channel above.
+`conda install -c conda-forge z7py` is the intended end state, but the package
+is not published there yet. Until then use PyPI or the channel above.
 
 z7py is deliberately thin: it depends only on **NumPy** and **Numba**. It needs
 neither the DGGRID binary nor a geospatial stack, so it can be imported inside
@@ -71,7 +77,7 @@ to odd resolutions and CCW to even resolutions.
 
 For reference purposes a rendering of three hierarchies of alternating GBT rotation is included (CW, CCW, CW).
 
-<img src="./images/grid.svg" width="200" alt="3 hierarchies in Z7's alternating GBT pattern">
+<img src="https://raw.githubusercontent.com/allixender/z7py/main/images/grid.svg" width="200" alt="3 hierarchies in Z7's alternating GBT pattern">
 
 ### GBT Addition
 
@@ -404,12 +410,12 @@ For interactive science and experimentation, you can easily use this Pixi enviro
 
 ## License
 
-Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE).
+Apache License 2.0 — see [LICENSE](https://github.com/allixender/z7py/blob/main/LICENSE) and [NOTICE](https://github.com/allixender/z7py/blob/main/NOTICE).
 
 ## Citing
 
 If you use z7py in academic work, please cite the IGEO7 paper and the software
-itself; see [CITATION.cff](CITATION.cff).
+itself; see [CITATION.cff](https://github.com/allixender/z7py/blob/main/CITATION.cff).
 
 
 ## References

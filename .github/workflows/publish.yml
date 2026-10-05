@@ -1,22 +1,32 @@
 name: Publish
 
-# prefix.dev is the primary channel for now; PyPI is opt-in until Trusted
-# Publishing is configured (see README). The two jobs are independent — the
-# conda recipe builds from this checkout and does not need a PyPI release.
+# A GitHub release publishes to both prefix.dev and PyPI. The two jobs are
+# independent — the conda recipe builds from this checkout and does not need a
+# PyPI release. Manual runs pick their targets, e.g. a TestPyPI dry run.
+#
+# PyPI uses Trusted Publishing (no API token): the publisher registered on
+# pypi.org / test.pypi.org must name this workflow file (publish.yml) and the
+# `release` environment.
 
 on:
   release:
     types: [published]
   workflow_dispatch:
     inputs:
-      publish_pypi:
-        description: "Also publish to PyPI (requires Trusted Publishing to be set up)"
+      conda:
+        description: "Publish to prefix.dev"
         type: boolean
         default: false
+      pypi:
+        description: "Publish to PyPI"
+        type: choice
+        options: [none, testpypi, pypi]
+        default: none
 
 jobs:
   conda:
     name: Publish to prefix.dev
+    if: ${{ github.event_name == 'release' || inputs.conda }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,11 +57,11 @@ jobs:
 
   pypi:
     name: Publish to PyPI
-    # opt-in only: manual runs with the box ticked, or set vars.ENABLE_PYPI=true
-    if: ${{ inputs.publish_pypi || vars.ENABLE_PYPI == 'true' }}
+    if: ${{ github.event_name == 'release' || inputs.pypi != 'none' }}
     runs-on: ubuntu-latest
     environment: release
     permissions:
+      contents: read
       id-token: write   # PyPI Trusted Publishing; no API token needed
     steps:
       - uses: actions/checkout@v4
@@ -64,7 +74,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip build twine
           python -m build
-          python -m twine check dist/*
+          python -m twine check --strict dist/*
+
+      # PyPI versions are immutable, so refuse a release whose tag and
+      # z7py.__version__ disagree.
+      - name: Check tag matches version
+        if: github.event_name == 'release'
+        run: |
+          if [ ! -f "dist/z7py-${GITHUB_REF_NAME#v}.tar.gz" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match the built version"
+            ls dist; exit 1
+          fi
 
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: ${{ inputs.pypi == 'testpypi' && 'https://test.pypi.org/legacy/' || 'https://upload.pypi.org/legacy/' }}
