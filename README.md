@@ -2,6 +2,9 @@
 
 <img src="https://raw.githubusercontent.com/allixender/z7py/main/images/igeo7_logo.svg" width="100" alt="IGEO7 logo">
 
+[![PyPI](https://img.shields.io/pypi/v/z7py?label=PyPI)](https://pypi.org/project/z7py/)
+[![prefix.dev](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Frepo.prefix.dev%2Fallixender%2Fgeo%2Fnoarch%2Frepodata.json&query=%24%5B%27packages.conda%27%5D%5B*%5D.version&prefix=v&label=prefix.dev&color=F7CC49)](https://prefix.dev/channels/@allixender/geo/packages/z7py)
+
 This is a work-in-progress to explore the possibility of neighbor traversal in the IGEO7/Z7. Z7 is an indexing system for the IGEO7 aperture 7 hexagonal discrete global grid DGGRID/Sahr Kmoch et al. (2025). It is based on the Generalized Balanced Ternary (GBT) numeral system described in Lucas, Gibson (1982), van Roessel (1988), Sahr (2019), and Wikipedia (2025).
 
 ## Installation
