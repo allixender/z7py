@@ -55,6 +55,7 @@ range_index
 :caption: Reference
 
 api
+changelog
 development
 references
 ```

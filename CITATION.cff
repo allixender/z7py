@@ -5,7 +5,7 @@ authors:
   given-names: "Alexander"
   orcid: "https://orcid.org/0000-0003-4386-4450"
 title: "z7py: Z7 (IGEO7/ISEA7H) discrete global grid indexing and neighbour traversal in NumPy and Numba"
-version: "0.1.0"
+version: "0.1.1"
 license: Apache-2.0
 url: "https://github.com/allixender/z7py"
 repository-code: "https://github.com/allixender/z7py"

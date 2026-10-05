@@ -5,7 +5,7 @@ parent/child navigation and monotonic range arithmetic. Pure NumPy/Numba:
 no DGGRID binary and no geospatial stack required.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .z7 import (
     # Resolution stats
@@ -40,6 +40,7 @@ from .z7 import (
     get_digits,
     get_resolution,
     get_parent,
+    get_parent_at,
     # Neighbour tables / helpers
     get_base_cell_neighbours,
     get_base_cell_neighbour,

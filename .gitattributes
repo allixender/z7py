@@ -1,0 +1,2 @@
+# pixi lock files are generated: do not merge or diff them line by line
+pixi.lock merge=binary linguist-language=YAML linguist-generated=true

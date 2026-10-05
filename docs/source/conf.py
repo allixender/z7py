@@ -29,8 +29,6 @@ extensions = [
 myst_enable_extensions = ["dollarmath", "amsmath", "colon_fence"]
 myst_heading_anchors = 3
 
-# keep `cw0=_GBT_CW_0` in signatures instead of the full lookup-table repr
-autodoc_preserve_defaults = True
 autodoc_member_order = "bysource"
 
 intersphinx_mapping = {

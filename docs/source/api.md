@@ -1,15 +1,11 @@
 # API reference
 
-All functions of `z7py.z7` listed below, except `get_parent_at`, are also
-importable from the top-level `z7py` package, as are `geodetic_to_authalic`,
-`authalic_to_geodetic`, `WGS84_A` and `WGS84_F` from `z7py.latitudes`.
+All functions of `z7py.z7` listed below are also importable from the top-level
+`z7py` package, as are `geodetic_to_authalic`, `authalic_to_geodetic`,
+`WGS84_A` and `WGS84_F` from `z7py.latitudes`.
 
 Functions marked as compiled in the source (`@nb.njit(cache=True)`) expect
 `np.uint64` indices and can be called from other Numba `nopython` functions.
-The lookup-table arguments in some signatures (`cw0`, `cw1`, `ccw0`, `ccw1`,
-`bcn`, `excl`, `rotations_arr`, `pole0`, `mod7`) are an implementation detail
-that makes the tables available to Numba; they should be left at their
-defaults.
 
 ## z7py.z7
 

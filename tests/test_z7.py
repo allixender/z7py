@@ -30,7 +30,8 @@ class TestResolutionStats:
 
         s10 = Z7.get_resolution_stats(10)
         assert s10["num_cells"] == 2824752492
-        assert math.isclose(s10["area_m2"], 180570.0)
+        # DGGRID reports 180570.0 (one decimal)
+        assert math.isclose(s10["area_m2"], 180570.0, abs_tol=0.05)
 
     def test_get_resolution_stats_invalid(self):
         with pytest.raises((ValueError, KeyError)):
@@ -46,7 +47,35 @@ class TestResolutionStats:
     def test_get_cell_area(self):
         assert math.isclose(Z7.get_cell_area_m2(0),  51006562172408.9)
         assert math.isclose(Z7.get_cell_area_km2(0), 51006562.1724089)
-        assert math.isclose(Z7.get_cell_area_m2(14), 75.2)
+        # DGGRID reports 75.2 (one decimal)
+        assert math.isclose(Z7.get_cell_area_m2(14), 75.2, abs_tol=0.05)
+
+    def test_cell_area_matches_dggrid_table(self):
+        # areas as printed by DGGRID: km² with 7 decimals, m² with 1 decimal
+        assert round(Z7.get_cell_area_km2(1), 7) == 7286651.7389156
+        assert round(Z7.get_cell_area_km2(5), 7) == 3034.8403744
+        assert round(Z7.get_cell_area_km2(10), 7) == 0.1805700
+        assert round(Z7.get_cell_area_m2(9), 1) == 1263990.2
+        assert round(Z7.get_cell_area_m2(16), 1) == 1.5
+
+    def test_cell_area_aperture_7(self):
+        for res in range(1, 21):
+            assert math.isclose(Z7.get_cell_area_m2(res) * 7, Z7.get_cell_area_m2(res - 1))
+            assert math.isclose(Z7.get_cell_area_km2(res) * 1e6, Z7.get_cell_area_m2(res))
+
+    def test_cell_area_nonzero_at_fine_resolutions(self):
+        # used to be rounded to 0.0 from resolution 18
+        for res in (18, 19, 20):
+            assert Z7.get_cell_area_m2(res) > 0.0
+            assert Z7.get_cell_area_km2(res) > 0.0
+        assert math.isclose(Z7.get_cell_area_m2(20), 6.392419283e-4, rel_tol=1e-9)
+
+    def test_cell_area_covers_the_sphere(self):
+        # 12 pentagons with 5/6 of the hexagon area: surface = area * (num_cells - 2)
+        surface_km2 = 510065621.724089
+        for res in range(21):
+            total = Z7.get_cell_area_km2(res) * (Z7.get_num_cells(res) - 2)
+            assert math.isclose(total, surface_km2, rel_tol=1e-12)
 
     def test_get_cls(self):
         assert math.isclose(Z7.get_cls_m(9),  1268.6064)
@@ -65,7 +94,7 @@ class TestResolutionStats:
     def test_find_resolution_by_value_area_closest(self):
         res = Z7.find_resolution_by_value(100.0, "area_m2")
         assert res == 14
-        assert math.isclose(Z7.get_cell_area_m2(res), 75.2)
+        assert math.isclose(Z7.get_cell_area_m2(res), 75.2, abs_tol=0.05)
 
     def test_find_resolution_by_value_smaller(self):
         res = Z7.find_resolution_by_value(1_000_000, "num_cells", prefer="smaller")
@@ -243,6 +272,12 @@ class TestIndexOps:
         # explicit resolution
         parent10 = Z7.get_parent(raw, resolution=10)
         assert Z7.get_resolution(parent10) == 10
+
+    def test_get_parent_at(self):
+        # compiled variant of get_parent, exported at package level
+        raw = self.test_raw
+        assert Z7.get_parent_at(raw, 10) == Z7.get_parent(raw, resolution=10)
+        assert Z7.get_parent_at(raw, 0) == Z7.encode_z7int(Z7.get_base_cell(raw), [])
 
 
 class TestMonotonicInt:

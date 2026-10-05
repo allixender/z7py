@@ -133,6 +133,10 @@ def authalic_to_geodetic(xi, degrees=True):
 # Generic versions that take ellipsoid parameters
 @nb.njit(cache=True)
 def geodetic_to_authalic_custom(phi, f, poly_fwd, degrees=True):
+    """
+    Convert geodetic latitude (ϕ) to authalic latitude (ξ) for an ellipsoid with flattening f.
+    poly_fwd is the coefficient matrix of the forward series (AUTHALIC_FWD).
+    """
     phi_rad = np.radians(phi) if degrees else phi
     n = third_flattening(f)
     fwd = np.empty(POLYNOMIAL_ORDER, dtype=np.float64)
@@ -143,6 +147,10 @@ def geodetic_to_authalic_custom(phi, f, poly_fwd, degrees=True):
 
 @nb.njit(cache=True)
 def authalic_to_geodetic_custom(xi, f, poly_inv, degrees=True):
+    """
+    Convert authalic latitude (ξ) to geodetic latitude (ϕ) for an ellipsoid with flattening f.
+    poly_inv is the coefficient matrix of the inverse series (AUTHALIC_INV).
+    """
     xi_rad = np.radians(xi) if degrees else xi
     n = third_flattening(f)
     inv = np.empty(POLYNOMIAL_ORDER, dtype=np.float64)

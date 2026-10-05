@@ -50,6 +50,21 @@ For interactive science and experimentation, you can easily use this Pixi enviro
 -   **Project-Local Environments:** Unlike Conda/Micromamba which use global named environments, Pixi stores the environment inside the project directory (`.pixi/`). This makes it much easier to run isolated experiments with different package versions without polluting your system or forgetting which "env" was for which project.
 -   **Multi-language:** It handles Python, R, C++, and more, making it ideal for projects that bridge high-level analysis and low-level kernels.
 
+### The lock file
+
+`pixi.lock` is tracked in the repository. It pins the `default` and the `docs`
+environment for the four platforms listed in `pixi.toml` (`linux-64`,
+`osx-64`, `osx-arm64` and `win-64`). The lock file is solved for all four
+platforms at once, independent of the machine it is generated on. After a
+change of the dependencies in `pixi.toml` or `pyproject.toml`, update and
+commit it:
+
+```bash
+pixi lock
+```
+
+A version bump of z7py itself does not change the lock file.
+
 ## Development without Pixi
 
 A plain virtual environment works as well:

@@ -134,11 +134,12 @@ table):
 
 ```python
 z7.get_num_cells(10)                  # 2824752492
-z7.get_cell_area_km2(10)              # 0.18057
+z7.get_cell_area_km2(10)              # 0.1805700228709557
+z7.get_cell_area_m2(20)               # 0.0006392419283112329
 z7.get_cls_m(10)                      # 479.4882
 z7.get_resolution_stats(10)
-# {'num_cells': 2824752492, 'area_km2': 0.18057, 'area_m2': 180570.0,
-#  'cls_km': 0.4794882, 'cls_m': 479.4882}
+# {'num_cells': 2824752492, 'area_km2': 0.1805700228709557,
+#  'area_m2': 180570.02287095567, 'cls_km': 0.4794882, 'cls_m': 479.4882}
 ```
 
 The `find_resolution_by_*` functions select the resolution for a target value.
